@@ -21,5 +21,19 @@
   "bugs": {
     "url": "https://github.com/euberdeveloper/queryencoder/issues"
   },
-  "homepage": "https://github.com/euberdeveloper/queryencoder#readme"
+  "homepage": "https://github.com/euberdeveloper/queryencoder#readme",
+  "devDependencies": {
+    "@euberdeveloper/eslint-plugin": "^1.1.3",
+    "@types/node": "^15.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "commitizen": "^4.2.4",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-mocha": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-unicorn": "^32.0.1",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4"
+  }
 }
