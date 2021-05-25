@@ -1,0 +1,25 @@
+{
+  "name": "queryencoder",
+  "version": "1.0.0",
+  "description": "An npm module to encode an object into query params of an url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/euberdeveloper/queryencoder.git"
+  },
+  "keywords": [
+    "queryencoder",
+    "query-params",
+    "url-params",
+    "encode"
+  ],
+  "author": "Eugenio Vinicio Berretta <euberdeveloper@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/euberdeveloper/queryencoder/issues"
+  },
+  "homepage": "https://github.com/euberdeveloper/queryencoder#readme"
+}
