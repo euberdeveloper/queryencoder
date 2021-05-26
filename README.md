@@ -26,7 +26,7 @@ $ npm install queryencoder
 
 ## Usage
 
-## Simple
+### Simple
 
 ```js
 const { encode } = require('queryencoder');
@@ -41,7 +41,7 @@ const object = {
 const queryUrl = encode(object);
 ```
 
-## With nested object
+### With nested object
 
 ```js
 const { encode } = require('queryencoder');
@@ -57,7 +57,7 @@ const object = {
 const queryUrl = encode(object);
 ```
 
-## With some options
+### With some options
 
 ```js
 const { encode } = require('queryencoder');
@@ -78,7 +78,7 @@ const queryUrl = encode(object, {
 });
 ```
 
-## With some dates
+### With some dates
 
 ```js
 const { encode } = require('queryencoder');
