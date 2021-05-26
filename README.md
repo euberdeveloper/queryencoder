@@ -12,11 +12,9 @@
 ![npm](https://img.shields.io/npm/v/queryencoder.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Types](https://img.shields.io/npm/types/queryencoder.svg)](https://www.npmjs.com/package/queryencoder)
-[![Maintainability](https://api.codeclimate.com/v1/badges/898fd5ca5774fb92d9c8/maintainability)](https://codeclimate.com/github/euberdeveloper/queryencoder/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/898fd5ca5774fb92d9c8/test_coverage)](https://codeclimate.com/github/euberdeveloper/queryencoder/test_coverage)
 
 # queryencoder
-A beautiful nodejs logger.
+An npm module to encode an object into query params of an url
 
 ## Install
 
@@ -31,154 +29,96 @@ $ npm install queryencoder
 ## Simple
 
 ```js
-const { Logger } = require('queryencoder');
-const logger = new Logger();
+const { encode } = require('queryencoder');
 
-logger.info('Informazione');
-logger.success('Successo!!!');
-logger.debug('Debug');
-logger.warning('Warning!!');
-logger.error('Errore');
+const object = {
+    str: 'string',
+    n: 23,
+    truthy: true
+};
 
-logger.info('My car is:', { constructor: 'Toyota', model: 'Yaris', year: 2004 });
+// The result is '?str=string&n=23&truthy=true'
+const queryUrl = encode(object);
 ```
 
-![Simple example](https://github.com/euberdeveloper/queryencoder/raw/main/docs/assets/simple.png)
-
-## Br and hr
+## With nested object
 
 ```js
-const { Logger } = require('queryencoder');
-const logger = new Logger();
+const { encode } = require('queryencoder');
 
-// Prints one line of '-'
-logger.hr();
-
-// Prints two empty lines
-logger.br(2);
-
-logger.info('My name is Eugenio');
-
-// Prints two empty lines
-logger.br(2);
-
-// Prints five lines of red '*'
-logger.hr(5, 'red', '*');
-```
-
-![Simple example](https://github.com/euberdeveloper/queryencoder/raw/main/docs/assets/br_and_hr.png)
-
-## With scope
-
-```js
-const { Logger } = require('queryencoder');
-const logger = new Logger('MAIN');
-
-// Adds {MAIN} before the message
-logger.info('Informazione');
-logger.success('Successo!!!');
-logger.error('The error is:', new Error('Errore'));
-```
-![Simple example](https://github.com/euberdeveloper/queryencoder/raw/main/docs/assets/with_scope.png)
-
-## With options
-
-```js
-const { Logger } = require('queryencoder');
-const logger = new Logger({
-    scope: 'MYSCOPE',
-    debug: false, // Hides the debug logs
-    palette: { // Overrides the default colour palette
-        primary: {
-            info: 'orange',
-            success: '(146,133,255)'
-        },
-        secondary: {
-            info: '#ffd485',
-            success: 'blue'
-        }
+const object = {
+    str: 'string',
+    nested: {
+        a: 'ciao'
     }
-});
+};
 
-logger.info('Informazione');
-logger.success('Successo!!!');
-logger.debug('This is not shown');
+// The result is '?str=string&nested=true&nested.a=ciao'
+const queryUrl = encode(object);
 ```
 
-![Simple example](https://github.com/euberdeveloper/queryencoder/raw/main/docs/assets/with_options.png)
+## With some options
+
+```js
+const { encode } = require('queryencoder');
+
+const object = {
+    str: 'string',
+    shown: undefined,
+    nested: {
+        a: 'ciao'
+    }
+};
+
+// The result is 'str=string&nested.a=ciao'
+const queryUrl = encode(object, {
+    preserveUndefined: true,
+    addQuestionMark: false,
+    flagNestedParents: false
+});
+```
+
+## With some dates
+
+```js
+const { encode } = require('queryencoder');
+
+const object = {
+    date: new Date('1999-04-23')
+};
+
+// The result is 'date=1999-04-23'
+const queryUrl = encode(object, {
+    dateParser: date => date.toISOString().slice(0, 10)
+});
+```
 
 ## API
 
-The documentation site is: [queryencoder documentation](https://queryencoder.vercel.app)
+The documentation site is: [queryencoder documentation](https://queryencoder.euber.dev)
 
-The documentation for development site is: [queryencoder dev documentation](https://queryencoder-dev.vercel.app)
+The documentation for development site is: [queryencoder dev documentation](https://queryencoder-dev.euber.dev)
 
-### Logger
+### encode
 
- The logger class, its instances will be the euber loggers.
+The function to encode an object into an url query param string.
 
 **Syntax:**
 
-`const logger = new Logger(options);`
+`const queryString = encode(object, options);`
 
-**Options:**
+**Parameters:**
 
-The options parameter is a `string` or a `Options` object. If it is a string, it like passing an `Options` object with only the property `scope` with that string as value.
+* __object__: It is the object describing the parameters that should be encoded. It is an object that can be nested ad have values of type: string, number, boolean and Date.
+* __options__: Optional. It is the object containing the options.
 
 **Options parameters:**
 
-* __scope__: Optional. A `string` representing the scope of the logger. It is prepended between `{}` before each message. If it is `null` the scope will not be printed.
-* __debug__: Optional. If `true`, the debug messages will be printed.
-* __palette__: Optional. An `object` of type `Palette` representing the colours used by the logger.
-
-**Palette parameters:**
-
-* __primary__: Optional. An `object` of `PaletteDefinitions` type that defines the colours for the primary part of a message, namely the `[TAG]` and an eventual `{SCOPE}`.
-* __secondary__: Optional. An `object` of `PaletteDefinitions` type that defines the colours for the secondary part of a message, namely the message passed to the logger function.
-
-**PaletteDefinitions:**
-
-* __info__: The colour for the info logs. Note: the colour can be a valid `chalk` colour (such as `'white'`), an hex colour (such as `'#FFFFFF'`), an RGB colour (such as `'(255,255,255)'`) or a css keyword (such as `'orange'`)
-* __success__: The colour for the success logs. Note: the colour can be a valid `chalk` colour (such as `'white'`), an hex colour (such as `'#FFFFFF'`), an RGB colour (such as `'(255,255,255)'`) or a css keyword (such as `'orange'`)
-* __debug__: The colour for the debug logs. Note: the colour can be a valid `chalk` colour (such as `'white'`), an hex colour (such as `'#FFFFFF'`), an RGB colour (such as `'(255,255,255)'`) or a css keyword (such as `'orange'`)
-* __warning__: The colour for the warning logs. Note: the colour can be a valid `chalk` colour (such as `'white'`), an hex colour (such as `'#FFFFFF'`), an RGB colour (such as `'(255,255,255)'`) or a css keyword (such as `'orange'`)
-* __error__: The colour for the error logs. Note: the colour can be a valid `chalk` colour (such as `'white'`), an hex colour (such as `'#FFFFFF'`), an RGB colour (such as `'(255,255,255)'`) or a css keyword (such as `'orange'`)
-
-Note: the __default_options__ are:
-
-```js
-const DEFAULT_OPTIONS = {
-    palette: {
-        primary: {
-            info: 'blue',
-            success: 'green',
-            debug: 'gray',
-            warning: 'yellow',
-            error: 'red'
-        },
-        secondary: {
-            info: '#81A2BE',
-            success: '#B5BD68',
-            debug: '#C5C8C6',
-            warning: '#F0C674',
-            error: '#CC6666'
-        }
-    },
-    debug: true,
-    scope: null
-};
-```
-
-**Methods:**
-
-* __info(message: string, object?: any): void__: Logs an info message. The format is `[INFO] |{SCOPE}| message |object|`, where `|word|` is optional.
-* __success(message: string, object?: any): void__: Logs an success message. The format is `[SUCCESS] |{SCOPE}| message |object|`, where `|word|` is optional.
-* __debug(message: string, object?: any): void__: Logs an debug message. The format is `[DEBUG] |{SCOPE}| message |object|`, where `|word|` is optional.
-* __warning(message: string, object?: any): void__: Logs an warning message. The format is `[WARNING] |{SCOPE}| message |object|`, where `|word|` is optional.
-* __error(message: string, object?: any): void__: Logs an error message. The format is `[ERROR] |{SCOPE}| message |object|`, where `|word|` is optional.
-* __br(n?: number): void__: Logs `n` empty lines. The default value of `n` is `1`.
-* __hr(n?: number, color?: string, symbol: string): void__: Logs `n` hr lines, coloured with `color` and constituted by `symbol` characters. THe default value of `n` is `1`, the default colour is `'white'` and the default symbol is `'-'`.
-* __setOptions(options?: Options | string): void__: It changes the options of the logger instance. It is almost as using the class constructor, with the difference that a new instance will not be created.
+* __addQuestionMark__: Optional. A `boolean` that says if the `?` will be added to the begin of the result. Default value: `true`.
+* __flagNestedParents__: Optional. A `boolean` that says if in case there is a nested object, a parameter with value true for each path to the parents will be added. Default value: `true`.
+* __preserveNull__: Optional. A `boolean` that says if all the null values will be kept and parsed as 'null'. Default value: `true`.
+* __preserveUndefined__: Optional. A `boolean` that says if all the undefined values will be kept and parsed as 'undefined'. Default value: `false`.
+* __dateParser__: Optional. The function used to parse the dates. Default value: `value => value.toISOString()`.
 
 ## Development
 
