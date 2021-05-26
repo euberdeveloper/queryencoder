@@ -16,7 +16,7 @@ function _encode(queryParams: QueryParms, options: InternalOptions, parts: strin
         const value = queryParams[param];
 
         if (value instanceof Date) {
-            parts.push(createParamString(`${prefix}${param}`, value.toISOString()));
+            parts.push(createParamString(`${prefix}${param}`, options.dateParser(value)));
         } else if (value === null) {
             if (options.preserveNull) {
                 parts.push(createParamString(`${prefix}${param}`, 'null'));
