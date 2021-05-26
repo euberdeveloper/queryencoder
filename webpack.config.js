@@ -20,9 +20,6 @@ module.exports = {
                 use: [
                     {
                         loader: 'ts-loader',
-                        options: {
-                            compiler: 'ttypescript'
-                        }
                     }
                 ]
             }
