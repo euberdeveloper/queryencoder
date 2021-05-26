@@ -29,12 +29,12 @@ function _encode(queryParams: QueryParms, options: InternalOptions, parts: strin
     }
 }
 
-export function encode(queryParams: QueryParms, options: Options): string {
+export function encode(queryParams: QueryParms, options?: Options): string {
     const parts: string[] = [];
 
-    const parsedOptions = parseOptions(options);
+    const parsedOptions = parseOptions(options ?? {});
     _encode(queryParams, parsedOptions, parts, '');
 
     const query = parts.join('&');
-    return options.addQuestionMark && query.length ? `?${query}` : query;
+    return parsedOptions.addQuestionMark && query.length ? `?${query}` : query;
 }
