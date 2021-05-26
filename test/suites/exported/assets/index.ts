@@ -45,7 +45,7 @@ const ASSETS: Asset[] = [
             data: new Date(1999, 5, 23)
         },
         options: {},
-        expected: '?ciao=mondo&data=1999-06-22T22:00:00.000Z'
+        expected: `?ciao=mondo&data=${new Date(1999, 5, 23).toISOString()}`
     },
     {
         title: 'Should return a query string with some strings and custom-formatted dates',
