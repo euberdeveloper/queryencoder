@@ -10,7 +10,23 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "shx rm -rf dist bundled",
+    "pretranspile:source": "npm run clean",
+    "transpile:source": "tsc -p source",
+    "pretranspile": "npm run clean",
+    "transpile": "tsc",
+    "prebundle": "npm run clean",
+    "bundle": "webpack",
+    "lint:source": "eslint source --ext ts --format codeframe",
+    "lint:source:fix": "eslint source --ext ts --format codeframe --fix",
+    "lint": "npm run lint:source",
+    "lint:fix": "npm run lint:source:fix",
+    "docs:html": "typedoc",
+    "docs:html-dev": "typedoc --options typedoc.dev.js",
+    "docs": "npm run docs:html && npm run docs:html-dev",
+    "commit": "git-cz",
+    "commit:sign": "git-cz -S",
+    "prepublishOnly": "npm run bundle"
   },
   "repository": {
     "type": "git",
