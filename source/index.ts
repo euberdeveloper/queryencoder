@@ -1,22 +1,30 @@
-import { Options, QueryParms } from './types';
+import { InternalOptions, Options, QueryParms } from './types';
+import { createParamString } from './utils/createParamString';
+import { parseOptions } from './utils/parseOptions';
 
-function _joinParts(param: string, value: string): string {
-    return [param, value].join('=');
-}
+export * from './types';
 
-function _encode(queryParams: QueryParms, options: Options, parts: string[], prefix: string): void {
+function _encode(queryParams: QueryParms, options: InternalOptions, parts: string[], prefix: string): void {
     for (const param in queryParams) {
         const value = queryParams[param];
 
         if (value instanceof Date) {
-            parts.push(_joinParts(`${prefix}${param}`, value.toISOString()));
+            parts.push(createParamString(`${prefix}${param}`, value.toISOString()));
+        } else if (value === null) {
+            if (options.preserveNull) {
+                parts.push(createParamString(`${prefix}${param}`, 'null'));
+            }
+        } else if (value === undefined) {
+            if (options.preserveUndefined) {
+                parts.push(createParamString(`${prefix}${param}`, 'undefined'));
+            }
         } else if (typeof value === 'object') {
             if (options.flagNestedParents) {
-                parts.push(_joinParts(`${prefix}${param}`, 'true'));
+                parts.push(createParamString(`${prefix}${param}`, 'true'));
             }
             _encode(value, options, parts, `${prefix}${param}.`);
         } else {
-            parts.push(_joinParts(`${prefix}${param}`, value.toString()));
+            parts.push(createParamString(`${prefix}${param}`, value.toString()));
         }
     }
 }
@@ -24,7 +32,8 @@ function _encode(queryParams: QueryParms, options: Options, parts: string[], pre
 export function encode(queryParams: QueryParms, options: Options): string {
     const parts: string[] = [];
 
-    _encode(queryParams, options, parts, '');
+    const parsedOptions = parseOptions(options);
+    _encode(queryParams, parsedOptions, parts, '');
 
     const query = parts.join('&');
     return options.addQuestionMark && query.length ? `?${query}` : query;
