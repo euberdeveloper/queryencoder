@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 
-import { Options } from '@src/types';
 import { createParamString } from '@src/utils/createParamString';
 
 export default function testColour(): void {

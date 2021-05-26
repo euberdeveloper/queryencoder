@@ -17,6 +17,12 @@
             ],
             "@test/*": [
                 "./test/*"
+            ],
+            "@src": [
+                "./source"
+            ],
+            "@test": [
+                "./test"
             ]
         },
         "outDir": "./dist"

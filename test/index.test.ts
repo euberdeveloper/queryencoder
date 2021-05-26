@@ -5,8 +5,10 @@ moduleAlias.addAlias('@test', path.join(process.cwd(), 'dist', 'test'));
 
 import testParseOptions from '@test/suites/utils/parseOptions.test';
 import testCreateParamString from '@test/suites/utils/createParamString.test';
+import testEncode from '@test/suites/exported/encode.test';
 
 describe('queryencoder tests', function () {
     testParseOptions();
     testCreateParamString();
+    testEncode();
 });
