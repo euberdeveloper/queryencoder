@@ -1,8 +1,9 @@
 {
   "name": "queryencoder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An npm module to encode an object into query params of an url",
-  "main": "index.js",
+  "main": "bundled/index.js",
+  "types": "bundled/index.d.ts",
   "files": [
     "package.json",
     "bundled",
