@@ -13,6 +13,10 @@ export default function testColour(): void {
             const result = parseOptions(opt);
 
             expect(JSON.stringify(result)).to.equal(JSON.stringify(expected));
+
+            const date = new Date();
+            const expectedDateResult = DEFAULT_OPTIONS.dateParser(date);
+            expect(result.dateParser(date)).to.equal(expectedDateResult);
         });
 
         it('Should return the default options changed with "addQuestionMark" and "flagNestedParents" set to false', function () {

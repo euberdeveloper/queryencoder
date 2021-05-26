@@ -2,3 +2,5 @@ node_modules
 bundled
 dist 
 docs/documentation
+coverage
+.nyc_output
