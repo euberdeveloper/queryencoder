@@ -3,6 +3,7 @@ import { InternalOptions, Options } from '../types';
 /** The default options for the function [[encode]] */
 const DEFAULT_OPTIONS: InternalOptions = {
     addQuestionMark: true,
+    shortBoolean: false,
     dateParser: value => value.toISOString(),
     flagNestedParents: true,
     preserveNull: true,

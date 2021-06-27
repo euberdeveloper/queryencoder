@@ -30,6 +30,12 @@ function _encode(queryParams: QueryParms, options: InternalOptions, parts: strin
                 parts.push(createParamString(`${prefix}${param}`, 'true'));
             }
             _encode(value, options, parts, `${prefix}${param}.`);
+        } else if (typeof value === 'boolean') {
+            if (!options.shortBoolean) {
+                parts.push(createParamString(`${prefix}${param}`, value.toString()));
+            } else if (value) {
+                parts.push(`${prefix}${param}`);
+            }
         } else {
             parts.push(createParamString(`${prefix}${param}`, value.toString()));
         }

@@ -7,6 +7,10 @@ export interface InternalOptions {
      */
     addQuestionMark: boolean;
     /**
+     * If a value is of boolean type, it will be just declared if true while omitted if false. (e.g. &val) Default value: false
+     */
+    shortBoolean: boolean;
+    /**
      * If, in case there is a nested object, a parameter with value true for each path to the parents will be added. Default value: true
      */
     flagNestedParents: boolean;
