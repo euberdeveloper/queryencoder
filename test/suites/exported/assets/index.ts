@@ -97,6 +97,24 @@ const ASSETS: Asset[] = [
         expected: '?ciao=undefined&come=undefined&n=23'
     },
     {
+        title: 'Should return a query string with short booleans',
+        object: {
+            ciao: null,
+            vero: true,
+            falso: false,
+            oggetto: {
+                v: true,
+                f: false
+            },
+            n: 23
+        },
+        options: {
+            shortBoolean: true,
+            flagNestedParents: false
+        },
+        expected: '?ciao=null&vero&oggetto.v&n=23'
+    },
+    {
         title: 'Should return a query string with a nested-flagged path',
         object: {
             a: {

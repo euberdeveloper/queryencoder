@@ -43,6 +43,17 @@ export default function testColour(): void {
             expect(JSON.stringify(result)).to.equal(JSON.stringify(expected));
         });
 
+        it('Should return the default options changed with "shortBoolean" changed', function () {
+            const opt: Options = {
+                shortBoolean: true
+            };
+
+            const expected = { ...DEFAULT_OPTIONS, ...opt };
+            const result = parseOptions(opt);
+
+            expect(JSON.stringify(result)).to.equal(JSON.stringify(expected));
+        });
+
         it('Should return the default options changed with a function returning the locale datetime as date interpretation', function () {
             const opt: Options = {
                 dateParser: value => value.toString()
