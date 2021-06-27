@@ -67,14 +67,16 @@ const object = {
     shown: undefined,
     nested: {
         a: 'ciao'
-    }
+    },
+    vero: true
 };
 
-// The result is 'str=string&nested.a=ciao'
+// The result is 'str=string&nested.a=ciao&vero'
 const queryUrl = encode(object, {
     preserveUndefined: true,
     addQuestionMark: false,
-    flagNestedParents: false
+    flagNestedParents: false,
+    shortBoolean: true
 });
 ```
 
@@ -115,6 +117,7 @@ The function to encode an object into an url query param string.
 **Options parameters:**
 
 * __addQuestionMark__: Optional. A `boolean` that says if the `?` will be added to the begin of the result. Default value: `true`.
+* __shortBoolean__: Optional. If a value is of boolean type, it will be just declared if `true` while omitted if `false`. (e.g. `&val`) Default value: `false`.
 * __flagNestedParents__: Optional. A `boolean` that says if in case there is a nested object, a parameter with value true for each path to the parents will be added. Default value: `true`.
 * __preserveNull__: Optional. A `boolean` that says if all the null values will be kept and parsed as 'null'. Default value: `true`.
 * __preserveUndefined__: Optional. A `boolean` that says if all the undefined values will be kept and parsed as 'undefined'. Default value: `false`.
